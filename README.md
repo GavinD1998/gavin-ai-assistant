@@ -7,6 +7,7 @@ This folder contains a static public information site for Gavin AI Assistant, an
 - `index.html` — home page
 - `eula.html` — End-User License Agreement
 - `privacy.html` — Privacy Policy
+- `security.html` — Security practices
 - `styles.css` — shared site styles
 
 The site uses only HTML and CSS. It contains no JavaScript, application credentials, OAuth client IDs, client secrets, or access tokens.
@@ -27,7 +28,7 @@ These steps use the GitHub website. GitHub CLI is not required.
 ### 2. Upload the site files
 
 1. On the new repository page, select **uploading an existing file**. If that link is not shown, select **Add file** and then **Upload files**.
-2. Upload these five files from this folder: `index.html`, `eula.html`, `privacy.html`, `styles.css`, and `README.md`.
+2. Upload these six files from this folder: `index.html`, `eula.html`, `privacy.html`, `security.html`, `styles.css`, and `README.md`.
 3. Confirm that the HTML and CSS files appear at the top level of the repository, not inside another folder.
 4. In **Commit changes**, use a message such as `Add Gavin AI Assistant public pages`.
 5. Commit directly to the `main` branch, then select **Commit changes**.
@@ -50,17 +51,23 @@ Replace `USERNAME` with the GitHub account or organization name that owns the re
 - Home: `https://USERNAME.github.io/gavin-ai-assistant/`
 - End-User License Agreement: `https://USERNAME.github.io/gavin-ai-assistant/eula.html`
 - Privacy Policy: `https://USERNAME.github.io/gavin-ai-assistant/privacy.html`
+- Security: `https://USERNAME.github.io/gavin-ai-assistant/security.html`
 
-The repository name is part of each URL. If a different repository name is used, replace `gavin-ai-assistant` in all three URLs.
+For the expected GitHub account, the Security page URL is:
+
+`https://gavind1998.github.io/gavin-ai-assistant/security.html`
+
+The repository name is part of each URL. If a different repository name is used, replace `gavin-ai-assistant` in all four URLs.
 
 ### 5. Confirm public access
 
 1. Sign out of GitHub or open a private/incognito browser window.
-2. Open each of the three HTTPS URLs above.
+2. Open each of the four HTTPS URLs above.
 3. Confirm that every page loads without a GitHub sign-in prompt.
-4. On the home page, open both legal-document links and confirm they lead to the correct pages.
-5. Confirm the browser shows an HTTPS connection.
-6. Use the final EULA and Privacy Policy URLs in the corresponding Intuit production-app fields.
+4. On the home page, open the EULA, Privacy Policy, and Security links and confirm they lead to the correct pages.
+5. On every page, confirm the Security link appears in both the navigation and footer and opens `security.html`.
+6. Confirm the browser shows an HTTPS connection.
+7. Use the final EULA, Privacy Policy, and Security URLs in the corresponding Intuit production-app fields where requested.
 
 ## Updating the site
 
@@ -68,7 +75,7 @@ Upload the revised file through **Add file** > **Upload files**, or edit the fil
 
 ## Before submitting to Intuit
 
-- Verify the repository and all three pages are public.
+- Verify the repository and all four pages are public.
 - Verify the company name and contact email are correct.
 - Verify the policy still matches the application’s actual data access, storage, processing, sharing, security, retention, and user controls.
 - Never commit OAuth client IDs, client secrets, tokens, API keys, or other credentials.
