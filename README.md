@@ -8,9 +8,10 @@ This folder contains a static public information site for Gavin AI Assistant, an
 - `eula.html` — End-User License Agreement
 - `privacy.html` — Privacy Policy
 - `security.html` — Security practices
+- `quickbooks-callback.html` — static QuickBooks Production OAuth callback page
 - `styles.css` — shared site styles
 
-The site uses only HTML and CSS. It contains no JavaScript, application credentials, OAuth client IDs, client secrets, or access tokens.
+The public information pages use only HTML and CSS. The QuickBooks callback page contains a small inline script that reads the current browser URL and copies it to the clipboard. It does not exchange authorization codes, call Intuit token endpoints, persist OAuth values, or transmit them to another service. The site contains no application credentials, OAuth client IDs, client secrets, access tokens, or refresh tokens.
 
 ## Publish with GitHub Pages
 
@@ -62,6 +63,46 @@ The repository name is part of each URL. If a different repository name is used,
 ### 5. Confirm public access
 
 1. Sign out of GitHub or open a private/incognito browser window.
+2. Open each of the four HTTPS URLs above.
+3. Confirm that every page loads without a GitHub sign-in prompt.
+4. On the home page, open the EULA, Privacy Policy, and Security links and confirm they lead to the correct pages.
+5. On every page, confirm the Security link appears in both the navigation and footer and opens `security.html`.
+6. Confirm the browser shows an HTTPS connection.
+7. Use the final EULA, Privacy Policy, and Security URLs in the corresponding Intuit production-app fields where requested.
+
+## Updating the site
+
+Upload the revised file through **Add file** > **Upload files**, or edit the file directly on GitHub, and commit the change to `main`. GitHub Pages will deploy the update automatically. Review the effective date when changing either legal document.
+
+## Production QuickBooks OAuth
+
+Exact Intuit Production Redirect URI:
+
+`https://gavind1998.github.io/gavin-ai-assistant/quickbooks-callback.html`
+
+The redirect URI registered with Intuit and the redirect URI saved in Gavin AI Assistant must match exactly. Every character matters, including `https`, the hostname, repository path, filename, capitalization, and trailing-slash behavior. The registered URI has no trailing slash.
+
+### Publish and verify the callback
+
+1. Upload `quickbooks-callback.html`, the updated `styles.css`, the updated `README.md`, and any other updated site files.
+2. Commit the changes to the branch used by GitHub Pages.
+3. Wait for the GitHub Pages deployment to finish.
+4. Open `https://gavind1998.github.io/gavin-ai-assistant/quickbooks-callback.html` directly and confirm the informational state loads.
+5. Confirm the page loads over HTTPS.
+6. Confirm the **Copy Complete Callback URL** button is not shown when the page is opened without OAuth parameters.
+7. Register the exact URI in **Intuit Developer → Gavin AI Assistant → Settings → Redirect URIs → Production**.
+8. Enter the exact same URI in **Gavin AI Assistant → Settings → QuickBooks → Production → Registered Production Redirect URI**.
+
+For a non-secret functional check, append dummy `code`, `state`, and `realmId` values to the URL. Confirm the success state appears and **Copy Complete Callback URL** copies the entire browser URL exactly. Do not use real OAuth values for this publishing check.
+
+GitHub Pages controls HTTP response headers and does not provide repository-level configuration for custom `Cache-Control` headers. The callback page includes best-effort HTML cache directives, does not persist its URL in browser storage or cookies, and does not forward query values in page code. The initial HTTPS request necessarily reaches GitHub Pages at the callback URL. OAuth values may also remain in normal browser history until the user closes or clears it.
+
+## Before submitting to Intuit
+
+- Verify the repository and all four pages are public.
+- Verify the company name and contact email are correct.
+- Verify the policy still matches the application’s actual data access, storage, processing, sharing, security, retention, and user controls.
+- Never commit OAuth client IDs, client secrets, tokens, API keys, or other credentials.
 2. Open each of the four HTTPS URLs above.
 3. Confirm that every page loads without a GitHub sign-in prompt.
 4. On the home page, open the EULA, Privacy Policy, and Security links and confirm they lead to the correct pages.
