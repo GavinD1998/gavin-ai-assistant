@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Security practices for Gavin AI Assistant, an internal application used by KEY Home Furnishings.">
+    <title>Security | Gavin AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Gavin AI Assistant home">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span>Gavin AI Assistant</span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="eula.html">EULA</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="security.html" aria-current="page">Security</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="document container">
+      <header class="document-header">
+        <p class="eyebrow">Security</p>
+        <h1>Security Practices</h1>
+        <p class="effective-date">Effective date: July 15, 2026</p>
+        <p class="intro">Gavin AI Assistant is an internal business application for KEY Home Furnishings. It assists with invoice, receiving, Gmail, and QuickBooks Online workflows and is not offered for public use. Its security controls are designed around limited access, user approval, local processing, and secure credential storage.</p>
+      </header>
+
+      <article class="document-content">
+        <section>
+          <h2>Authentication and authorization</h2>
+          <p>QuickBooks Online and Gmail connections use OAuth authorization. Gavin AI Assistant does not store users’ Intuit or Google account passwords. An authorized user can revoke connected-service access by disconnecting the account in the App or through the applicable service provider.</p>
+          <p>Financial actions remain subject to explicit user review and approval. The QuickBooks Bill workflow always goes through the App’s validation and confirmation steps; it does not provide a path for Bill creation that bypasses those steps.</p>
+        </section>
+
+        <section>
+          <h2>Credential storage</h2>
+          <p>OAuth access tokens, refresh tokens, and confidential client credentials are stored in macOS Keychain. Secrets are not stored in the ordinary SQLite application database and are not intentionally written to application audit logs. Public client identifiers may be stored in application settings where appropriate.</p>
+        </section>
+
+        <section>
+          <h2>Local data storage</h2>
+          <p>Application records are stored locally using SQLite. Managed invoice and receiving documents are stored locally in the App’s designated folders, and audit records are stored locally. Access to this local data depends on the security of the company-controlled Mac and its macOS user account.</p>
+        </section>
+
+        <section>
+          <h2>Data processing</h2>
+          <p>PDF text extraction and optical character recognition are performed locally where supported, using macOS technologies such as PDFKit and Apple Vision. Documents are not sold, rented, or used for advertising.</p>
+          <p>QuickBooks data is used only for the authorized KEY Home Furnishings workflow. Data is sent to Google or Intuit only as necessary to perform authorized Gmail or QuickBooks operations. Those API operations necessarily communicate with the applicable connected service.</p>
+        </section>
+
+        <section>
+          <h2>QuickBooks safeguards</h2>
+          <p>The App uses existing QuickBooks Vendors, Accounts, and Terms. It does not create a missing Vendor, Account, or Term.</p>
+          <ul>
+            <li>Invoices must be approved before they can be sent to QuickBooks.</li>
+            <li>A valid PDF attachment is required.</li>
+            <li>Required Bill values are verified before submission.</li>
+            <li>A successfully submitted invoice cannot be submitted again.</li>
+            <li>If the required PDF attachment fails, the App attempts to roll back the incomplete Bill.</li>
+            <li>Failed invoices remain available for user review.</li>
+            <li>Intuit transaction or request references, such as <code>intuit_tid</code>, are recorded when available to support troubleshooting.</li>
+          </ul>
+          <p>The App does not move money or pay Bills. Payments remain manual.</p>
+        </section>
+
+        <section>
+          <h2>User approval and guardrails</h2>
+          <p>Ordinary changes require user approval where configured. Batch and destructive actions require additional confirmation. QuickBooks submissions have a dedicated review step followed by final confirmation.</p>
+          <p>The App does not autonomously delete Gmail messages. During its invoice-label workflow, it preserves existing Gmail labels and unread status.</p>
+        </section>
+
+        <section>
+          <h2>Logging and troubleshooting</h2>
+          <p>The App maintains a local Audit Trail that records operational outcomes and sanitized error details. Sensitive tokens and client secrets are excluded from logs, and document contents are not intentionally copied into diagnostic logs.</p>
+          <p>Intuit request identifiers may be retained to assist with support troubleshooting.</p>
+        </section>
+
+        <section>
+          <h2>Data retention and removal</h2>
+          <p>Local data remains until removed by an authorized company user. Connected accounts may be disconnected, locally cached QuickBooks reference data may be cleared, and OAuth tokens may be removed from macOS Keychain.</p>
+          <p>Data retained by Google or Intuit remains subject to those services’ own retention and privacy policies.</p>
+        </section>
+
+        <section>
+          <h2>Security limitations</h2>
+          <p>No software or storage method can guarantee absolute security. Security also depends on the company-controlled Mac, the macOS user account, device passwords, software updates, and physical access to the computer.</p>
+          <p>Suspected security issues should be reported promptly.</p>
+        </section>
+
+        <section>
+          <h2>Contact</h2>
+          <p>To report a suspected security issue involving Gavin AI Assistant, contact <a href="mailto:gavin@keyhomefurnishings.com">gavin@keyhomefurnishings.com</a>.</p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 KEY Home Furnishings. Internal use only.</p>
+        <div class="footer-links">
+          <a href="eula.html">End-User License Agreement</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="security.html" aria-current="page">Security</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
