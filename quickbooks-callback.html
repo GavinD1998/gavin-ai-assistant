@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Referrer-Policy" content="no-referrer">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'sha256-MPVoaBg7CfKuPmSeskvxOZhzTMv3CcZAaq5pM0CDrEk='; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="description" content="QuickBooks authorization callback for Gavin AI Assistant.">
+    <title>QuickBooks Connection | Gavin AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand" aria-label="Gavin AI Assistant">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span>Gavin AI Assistant</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="callback-shell container">
+      <section class="callback-card" aria-labelledby="callback-title" aria-live="polite">
+        <div id="callback-mark" class="callback-mark" aria-hidden="true">Q</div>
+        <p class="eyebrow">QuickBooks Online</p>
+        <h1 id="callback-title">QuickBooks connection</h1>
+        <p id="callback-message" class="callback-message">This page completes the QuickBooks connection for Gavin AI Assistant.</p>
+        <p id="callback-guidance" class="callback-guidance">Start the connection from Gavin AI Assistant Settings.</p>
+
+        <div id="success-details" class="callback-details" hidden>
+          <div>
+            <span class="detail-label">Authorization code</span>
+            <strong>Received</strong>
+          </div>
+          <div>
+            <span class="detail-label">Realm ID</span>
+            <strong id="realm-id"></strong>
+          </div>
+        </div>
+
+        <div id="error-details" class="callback-error-details" hidden>
+          <div id="error-row" hidden>
+            <span class="detail-label">Error</span>
+            <strong id="error-value"></strong>
+          </div>
+          <div id="error-description-row" hidden>
+            <span class="detail-label">Description</span>
+            <p id="error-description"></p>
+          </div>
+        </div>
+
+        <div id="copy-actions" class="callback-actions" hidden>
+          <button id="copy-callback-url" class="primary-button" type="button">Copy Complete Callback URL</button>
+          <p id="copy-status" class="copy-status" role="status"></p>
+          <div id="manual-copy" class="manual-copy" hidden>
+            <label for="callback-url">Complete callback URL</label>
+            <input id="callback-url" type="text" readonly autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+        </div>
+
+        <p class="callback-privacy-note">This page does not exchange tokens or store the callback URL. Its page code does not send OAuth values to another service.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 KEY Home Furnishings. Internal use only.</p>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const currentURL = window.location.href;
+        const parameters = new URL(currentURL).searchParams;
+        const title = document.getElementById("callback-title");
+        const message = document.getElementById("callback-message");
+        const guidance = document.getElementById("callback-guidance");
+        const mark = document.getElementById("callback-mark");
+        const successDetails = document.getElementById("success-details");
+        const errorDetails = document.getElementById("error-details");
+        const copyActions = document.getElementById("copy-actions");
+        const copyButton = document.getElementById("copy-callback-url");
+        const copyStatus = document.getElementById("copy-status");
+        const manualCopy = document.getElementById("manual-copy");
+        const callbackURLField = document.getElementById("callback-url");
+
+        const sanitize = (value, maximumLength) => String(value || "")
+          .replace(/[\u0000-\u001f\u007f]/g, " ")
+          .replace(/[<>]/g, "")
+          .replace(/\s+/g, " ")
+          .trim()
+          .slice(0, maximumLength);
+
+        const code = parameters.get("code") || "";
+        const state = parameters.get("state") || "";
+        const realmID = parameters.get("realmId") || "";
+        const oauthError = parameters.get("error") || "";
+        const oauthErrorDescription = parameters.get("error_description") || "";
+        const oauthParameterNames = ["code", "state", "realmId", "error", "error_description"];
+        const hasOAuthParameters = oauthParameterNames.some((name) => parameters.has(name));
+
+        if (oauthError || oauthErrorDescription) {
+          mark.textContent = "!";
+          mark.classList.add("is-error");
+          title.textContent = "QuickBooks authorization was not completed";
+          message.textContent = "Return to Gavin AI Assistant and try connecting again.";
+          guidance.hidden = true;
+          errorDetails.hidden = false;
+
+          const sanitizedError = sanitize(oauthError, 120);
+          const sanitizedDescription = sanitize(oauthErrorDescription, 600);
+          if (sanitizedError) {
+            document.getElementById("error-value").textContent = sanitizedError;
+            document.getElementById("error-row").hidden = false;
+          }
+          if (sanitizedDescription) {
+            document.getElementById("error-description").textContent = sanitizedDescription;
+            document.getElementById("error-description-row").hidden = false;
+          }
+        } else if (code && state && realmID) {
+          mark.textContent = "OK";
+          mark.classList.add("is-success");
+          title.textContent = "QuickBooks authorization received";
+          message.textContent = "Return to Gavin AI Assistant and paste the complete callback URL into the \u201cComplete Production OAuth\u201d field.";
+          guidance.hidden = true;
+          document.getElementById("realm-id").textContent = sanitize(realmID, 160);
+          successDetails.hidden = false;
+          copyActions.hidden = false;
+        } else if (hasOAuthParameters) {
+          mark.textContent = "!";
+          mark.classList.add("is-error");
+          title.textContent = "QuickBooks authorization could not be verified";
+          message.textContent = "The callback is missing required authorization information.";
+          guidance.textContent = "Return to Gavin AI Assistant and try connecting again.";
+        }
+
+        copyButton.addEventListener("click", async () => {
+          copyStatus.textContent = "";
+          manualCopy.hidden = true;
+          callbackURLField.value = "";
+
+          try {
+            if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+              throw new Error("Clipboard API unavailable");
+            }
+            await navigator.clipboard.writeText(currentURL);
+            copyStatus.textContent = "Callback URL copied";
+          } catch {
+            callbackURLField.value = currentURL;
+            manualCopy.hidden = false;
+            callbackURLField.focus();
+            callbackURLField.select();
+            copyStatus.textContent = "Clipboard access was unavailable. Select and copy the complete URL below.";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
